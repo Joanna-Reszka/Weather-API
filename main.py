@@ -5,10 +5,12 @@ import pandas as pd
 app = Flask("__name__")
 # Connect html pages with  Flask website object
 # function decorator
+stations = pd.read_csv("data_small/stations.txt", skiprows=17)
+stations= stations[['STAID', 'STANAME                                 ']]
 @app.route('/')
 def home():
     # Flask by default will look for html file in "templates" folder
-    return render_template('home.html')
+    return render_template('home.html', data = stations.to_html())
 #<station>/<date> means that those parameters are typed in by user
 @app.route('/api/v1/<station>/<date>')
 def about(station,date):
